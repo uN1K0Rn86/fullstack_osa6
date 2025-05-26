@@ -32,10 +32,10 @@ const reducer = (state = initialState, action) => {
       }
       return state.map(anecdote =>
         anecdote.id !== id ? anecdote : changedAnecdote
-      )
+      ).sort((a, b) => b.votes - a.votes)
     }
     case 'NEW_ANECDOTE':
-      return state.concat(action.payload)
+      return state.concat(action.payload).sort((a, b) => b.votes - a.votes)
   }
 
   return state
