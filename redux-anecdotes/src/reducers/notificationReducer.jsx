@@ -14,7 +14,7 @@ const notificationSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(createAnecdote, (state, action) => {
-        return `New anecdote added: "${action.payload}"`
+        return `New anecdote added: "${action.payload.content}"`
       })
       .addCase(addVote, (state, action) => {
         return `You voted for: "${action.payload.content}"`
