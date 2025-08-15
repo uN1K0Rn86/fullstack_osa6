@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { appendAnecdote, updateAnecdote } from "./anecdoteReducer"
 
 const initialState = ''
 
@@ -7,21 +6,24 @@ const notificationSlice = createSlice({
   name: 'notification',
   initialState,
   reducers: {
+    setMessage(state, action) {
+      return action.payload
+    },
     clearNotification() {
       return ''
     }
   },
-  extraReducers: builder => {
-    builder
-      .addCase(appendAnecdote, (state, action) => {
-        return `New anecdote added: "${action.payload.content}"`
-      })
-      .addCase(updateAnecdote, (state, action) => {
-        return `You voted for: "${action.payload.content}"`
-      })
-  }
 })
 
-export const { clearNotification } = notificationSlice.actions
+export const { setMessage, clearNotification } = notificationSlice.actions
+
+export const setNotification = ( message, seconds ) => {
+  return async dispatch => {
+    dispatch(setMessage(message))
+    setTimeout(() => {
+      dispatch(clearNotification())
+    }, seconds * 1000)
+  }
+}
 
 export default notificationSlice.reducer
